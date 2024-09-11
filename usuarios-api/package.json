@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "init": "tsc --init",
+    "dev": "ts-node-dev ./src/server.ts",
+    "migration:generate": "typeorm-ts-node-commonjs -d ./src/config/Database.ts migration:generate ./src/migrations/default",
+    "migration:run": "typeorm-ts-node-commonjs -d ./src/config/Database.ts migration:run"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.4",
+    "ts-node-dev": "^2.0.0",
+    "typeorm": "^0.3.12",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17"
+  }
+}
