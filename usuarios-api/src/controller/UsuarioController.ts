@@ -7,15 +7,31 @@ export class UsuarioController {
     const repo = AppDataSource.getRepository(Usuario);
     let usuarios;
 
-    if (req.query.id) {
-      usuarios = await repo.query("select * from usuarios where codigo = " + req.query.id);
-
-    } else if (req.query.id_in) {
-      usuarios = await repo.query("select * from usuarios where codigo in (" + req.query.id_in + ")");
-
+    if (req.query.id_in) {
+      usuarios = await repo.query(
+        "select * " +
+        "from usuarios " +
+        "where codigo_cargo = 1 " +
+        "and codigo in (" + req.query.id_in + ")"
+      );
+    } else if (req.query.id) {
+      usuarios = await repo.query(
+        "select * " +
+        "from usuarios " +
+        "where codigo_cargo = 1 " +
+        "and codigo = " + req.query.id
+      );
+    } else if (req.query.nome) {
+      usuarios = await repo.query(
+        "select * " +
+        "from usuarios " +
+        "where codigo_cargo = 1 " +
+        "and lower(nome) like ('%" + req.query.nome + "%')"
+      );
     } else {
-      usuarios = await repo.find();
+      usuarios = await repo.findBy({ codigo_cargo: 1 });
     }
+
     res.json(usuarios);
   }
 
